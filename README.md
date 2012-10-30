@@ -13,11 +13,13 @@ We will start with a super simple server. It will help everyone get comfortable 
 
 This super-simple ATM will support the following actions. An account is created by deposting money to it.
 
-{check_balance, AccountNumber} -> {ok, Amount} ; {no_such_account}
-
-{withdraw, AccountNumber, Amout} -> {ok, NewBalance}; {overdrawn}; {no_such_account}
-
-{deposit, AccountNumber}-> {ok, NewBalance}
+````
+atm:start() -> started
+atm:check_balance(AccountNumber) -> {balance, Amount} | no_such_account | atm_closed
+atm:withdraw(AccountNumber, Amount) -> {new_balance, Amount} | overdrawn | no_such_account | atm_closed
+atm:deposit(AccountNumber, Amount) -> {new_balance, Amount} | atm_closed
+atm:stop() -> stopped | atm_closed
+````
 
 To start we won't bother with PIN numbers.
 
