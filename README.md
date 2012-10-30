@@ -15,7 +15,7 @@ This super-simple ATM will support the following actions. An account is created 
 
 {check_balance, AccountNumber} -> {ok, Amount} ; {no_such_account}
 
-{withdraw, AccountNumber, Amout} -> {ok, NewBalance}; {overdrawn}; {no_such_account}
+{withdraw, AccountNumber, Amount} -> {ok, NewBalance}; {overdrawn}; {no_such_account}
 
 {deposit, AccountNumber}-> {ok, NewBalance}
 
