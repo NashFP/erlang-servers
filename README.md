@@ -17,7 +17,7 @@ This super-simple ATM will support the following actions. An account is created 
 
 {withdraw, AccountNumber, Amount} -> {ok, NewBalance}; {overdrawn}; {no_such_account}
 
-{deposit, AccountNumber}-> {ok, NewBalance}
+{deposit, AccountNumber, Amount}-> {ok, NewBalance}
 
 To start we won't bother with PIN numbers.
 
