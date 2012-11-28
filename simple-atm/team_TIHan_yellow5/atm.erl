@@ -76,8 +76,8 @@ check_balance(Accounts, AccountNumber) ->
     case (dict:find(AccountNumber, Accounts)) of
 	error ->
 	    {Accounts, no_such_account};
-	{ok, Balance} ->
-	    {Accounts, {balance, Balance}}
+	{ok, Transactions} ->
+      {Accounts, {balance, lists:sum(Transactions)}}
     end.
 
 
@@ -85,26 +85,24 @@ withdraw(Accounts, AccountNumber, Amount) ->
     case (dict:find(AccountNumber, Accounts)) of
 	error ->
 	    {Accounts, no_such_account};
-	{ok, Balance} ->
-	    NewBalance = Balance - Amount,
+	{ok, Transactions} ->
+      NewBalance = lists:sum(Transactions) - Amount,
 	    case (NewBalance < 0) of
 		true ->
 		    {Accounts, overdrawn};
 		_ ->
-		    NewAccounts = dict:store(AccountNumber, NewBalance, Accounts),
+		    NewAccounts = dict:store(AccountNumber, lists:append(Transactions, [-Amount]), Accounts),
 		    {NewAccounts, {new_balance, NewBalance}}
 	    end
     end.
 
 deposit(Accounts, AccountNumber, Amount) ->
-    OldBalance =
-	case (dict:find(AccountNumber, Accounts)) of
-	    error ->
-		0;
-	    {ok, Balance} ->
-		Balance
-	end,
-
-    NewBalance = OldBalance + Amount,
-    NewAccounts = dict:store(AccountNumber, NewBalance, Accounts),
-    {NewAccounts, {new_balance, NewBalance}}.
+    case (dict:find(AccountNumber, Accounts)) of
+  error ->
+      NewAccounts = dict:store(AccountNumber, [Amount], Accounts),
+      {NewAccounts, {new_balance, Amount}};
+  {ok, Transactions} ->
+      NewBalance = lists:sum(Transactions) + Amount,
+      NewAccounts = dict:store(AccountNumber, lists:append(Transactions, [Amount]), Accounts),
+      {NewAccounts, {new_balance, NewBalance}}
+	  end.
