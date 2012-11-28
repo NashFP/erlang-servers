@@ -1,6 +1,6 @@
 -module(atm).
 
--export([start/0, init/0, stop/0, check_balance/1, withdraw/2, deposit/2]).
+-export([start/0, init/0, stop/0, check_balance/1, withdraw/2, deposit/2, transactions/1]).
 
 start() ->
     case (whereis(atm)) of
@@ -27,6 +27,8 @@ withdraw(AccountNumber, Amount) ->
 deposit(AccountNumber, Amount) ->
     call({deposit, AccountNumber, Amount}).
 
+transactions(AccountNumber) ->
+    call({transactions, AccountNumber}).
 
 call(Message) ->
 
@@ -58,6 +60,10 @@ loop(Accounts) ->
 	    {NewAccounts, Reply} = deposit(Accounts, AccountNumber, Amount),
 	    reply(Pid, Reply),
 	    loop(NewAccounts);
+	{request, Pid, {transactions, AccountNumber}} ->
+	    Reply = "ok",
+	    reply(Pid, Reply),
+	    loop(Accounts);
 	{request, Pid, stop} ->
 	    io:format("Shutting down...~n"),
 	    reply(Pid, stopped);
