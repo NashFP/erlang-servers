@@ -1,6 +1,29 @@
 -module(atm).
 
--export([]).
+-export([start/0, stop/0, loop/0]).
+
+
+start() ->
+	Pid = spawn(atm, loop, []),
+	register(atm, Pid).
+
+stop() ->
+	atm ! stop.
+
+loop() ->
+	receive
+		hi ->
+			io:format("Hi!~n"),
+			loop();
+		stop ->
+			io:format("Shutting down!~n");
+		Unknown ->
+			io:format("Unknown message: ~p~n", [Unknown]),
+			loop()
+	end.
+
+
+
 
 %% atm:start() -> 
 %%     started
