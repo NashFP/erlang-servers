@@ -1,11 +1,7 @@
-erlang-servers
-==============
+Erlang School Final Exam
+========================
 
-NashFP "Build an Erlang Server" lab materials
-
-For the lab we will use the example of a bank ATM. 
-
-The ATM supports multiple accounts and maintains a balance. 
+NashFP "Build an Erlang Server" lab materials. For the lab we will use the example of a bank ATM. The ATM supports multiple accounts and maintains a balance. 
 
 Step 1: super simple ATM
 ------------------------
@@ -41,3 +37,16 @@ Step 2: a cluster!
 * Ensure the deposit is refleced on node2 and the other conneced nodes, but not on node1.
 * Rejoin node1 to the cluster.
 * Ensure the balances for each node all jive.
+
+
+How to submit your exam
+-----------------------
+
+Contribute your solution(s) by adding a **folder** named {your twitter handle}+{your erlang-vm language} such as: 
+````
+/bryan_hunter+erlang/step2
+/knewter+elixir/step1
+/knewter+erlang/step1
+````
+
+Time to play!
